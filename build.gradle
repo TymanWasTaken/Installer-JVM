@@ -11,6 +11,7 @@ archivesBaseName = "Bundle-Installer"
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -22,6 +23,8 @@ dependencies {
     include "io.ktor:ktor-client-apache:1.6.2"
 
     include 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21'
+
+    include 'com.github.Dansoftowner:jSystemThemeDetector:3.6'
 
     include 'com.formdev:flatlaf:1.5'
     include 'com.google.code.gson:gson:2.8.7'

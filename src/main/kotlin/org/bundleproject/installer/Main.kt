@@ -29,7 +29,9 @@ fun main(args: Array<String>) {
             return
         }
 
-        InstallerGui.isVisible = true
+        InstallerGui.setupInitialTheme()
+        val gui = InstallerGui()
+        gui.isVisible = true
     }
 }
 

@@ -1,6 +1,7 @@
 package org.bundleproject.installer.gui
 
-import com.formdev.flatlaf.FlatLightLaf
+import com.formdev.flatlaf.*
+import com.jthemedetecor.OsThemeDetector
 import org.bundleproject.installer.installMultiMC
 import org.bundleproject.installer.installOfficial
 import org.bundleproject.installer.utils.*
@@ -13,7 +14,7 @@ import javax.swing.event.DocumentListener
 import kotlin.math.max
 import kotlin.system.exitProcess
 
-object InstallerGui : JFrame("Bundle Installer") {
+class InstallerGui : JFrame("Bundle Installer") {
 
     private var versionField: JComboBox<String>
 
@@ -23,8 +24,12 @@ object InstallerGui : JFrame("Bundle Installer") {
      * @since 0.0.1
      */
     init {
-        UIManager.setLookAndFeel(FlatLightLaf())
-
+        OsThemeDetector.getDetector().registerListener { dark ->
+            SwingUtilities.invokeLater {
+                if (dark) FlatDarkLaf.setup() else FlatLightLaf.setup()
+                SwingUtilities.updateComponentTreeUI(this)
+            }
+        }
         iconImage = getResourceImage("/bundle.png")
         this.defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         setSize(404, 258)
@@ -197,6 +202,13 @@ object InstallerGui : JFrame("Bundle Installer") {
      */
     private fun err(message: String) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE)
+    }
+
+    companion object {
+        fun setupInitialTheme() {
+            if (OsThemeDetector.getDetector().isDark) FlatDarkLaf.setup()
+            else FlatLightLaf.setup()
+        }
     }
 
 }
